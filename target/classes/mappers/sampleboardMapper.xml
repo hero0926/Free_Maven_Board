@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sampleboard">
+
+	<!-- 게시판 총 글 개수 -->
+	<select id="listCount" resultType="int" parameterType="java.util.HashMap">
+	<![CDATA[
+		select count(b_idx) from board_sample where b_idx > 0
+	]]>	
+	</select>
+	
+	<!-- 리스트를 전부 불러옴 -->
+	<select id="listAll" parameterType="java.util.HashMap" resultType="egovMap">
+		select 
+		b_idx, b_title, b_content, b_writer_name, b_write_date, b_modify_date, b_view_hit 
+		from board_sample 
+	</select>
+	
+	<!-- 일정 범위의 게시판 리스트를 불러옴 -->
+	<select id="list" parameterType="java.util.HashMap" resultType="egovMap">
+	<![CDATA[
+		select * from board_sample where b_idx > 0 
+	]]>	
+	</select>	
+	
+	<!-- 뷰페이지 열람시 조회수 증가 시키기 -->
+	<update id="viewHit" parameterType="java.util.HashMap" >
+	<![CDATA[
+		update board_sample set b_view_hit = (b_view_hit + 1) where b_idx = #{b_idx}
+	]]>
+	</update>	
+	
+	<!-- 글읽기 -->
+	<select id="read" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from board_sample where b_idx = #{b_idx}	
+	</select>
+	
+	<!-- 글쓰기 -->
+	<insert id="save" parameterType="java.util.HashMap" >
+		insert into board_sample (b_title, b_content, b_writer_name, b_password, b_write_date, b_modify_date, b_view_hit)
+		values (#{b_title},#{b_content},#{b_writer_name},#{b_password}, CONVERT(CHAR(10), GETDATE(), 23), CONVERT(CHAR(10), GETDATE(), 23), 0)
+	</insert>
+	
+	<!-- 글 수정하기 -->
+	<update id="update" parameterType="java.util.HashMap" >
+		update board_sample set
+		b_title = #{b_title},
+		b_content = #{b_content},
+		b_modify_date = CONVERT(CHAR(10), GETDATE(), 23)
+		where b_idx = #{b_idx}
+	</update>
+	
+	<!-- 글 지우기 -->
+	<delete id="delete" parameterType="java.util.HashMap">
+		delete from board_sample where b_idx = #{b_idx}
+	</delete>
+	
+	<!-- paging 처리 -->
+	<select id="listPage" parameterType="java.util.HashMap" resultType="egovMap">
+	<![CDATA[
+		SELECT * FROM (
+     		SELECT A.*,
+                 ROWNUM AS RNUM,
+                 FLOOR((ROWNUM-1)/10+1) AS PAGE,
+                 COUNT(*) OVER() AS TOTCNT FROM board_sample (
+        
+    		) A
+		) WHERE PAGE = #{pagenum};
+	]]>
+	</select>
+	
+	<!-- paging 처리2 -->
+	<select id="listCri" parameterType="java.util.HashMap" resultType="egovMap">
+	<![CDATA[
+		SELECT * FROM 
+		  ( SELECT row_number() over(order by b_idx) rownum,* FROM board_sample ) board_sample
+		  where rownum between #{pageStart} and #{endPage}
+	]]>
+	</select>
+	
+</mapper>
