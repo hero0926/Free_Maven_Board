@@ -61,13 +61,11 @@
 	<select id="listPage" parameterType="java.util.HashMap" resultType="egovMap">
 	<![CDATA[
 		SELECT * FROM (
-     		SELECT A.*,
-                 ROWNUM AS RNUM,
-                 FLOOR((ROWNUM-1)/10+1) AS PAGE,
-                 COUNT(*) OVER() AS TOTCNT FROM board_sample (
-        
-    		) A
-		) WHERE PAGE = #{pagenum};
+               SELECT ROW_NUMBER() OVER(ORDER BY b_idx) AS NUMBER,
+                    b_idx, b_title, b_content, b_writer_name, b_write_date, b_modify_date, b_view_hit FROM board_sample
+               ) AS TBL
+			WHERE NUMBER BETWEEN ((#{page} - 1) * #{perPageNum} + 1) AND (#{page} * #{perPageNum})
+			ORDER BY b_idx
 	]]>
 	</select>
 	
@@ -76,7 +74,7 @@
 	<![CDATA[
 		SELECT * FROM 
 		  ( SELECT row_number() over(order by b_idx) rownum,* FROM board_sample ) board_sample
-		  where rownum between #{pageStart} and #{endPage}
+		  where rownum between 1 and 10
 	]]>
 	</select>
 	

@@ -15,7 +15,6 @@ public class Criteria {
 
 	private int page;	
 	private int perPageNum;
-	private int endPage;
 	
 	
 	
@@ -109,40 +108,15 @@ public class Criteria {
 		return this.perPageNum;
 	}
 	
-	/**
-	 * 끝에 인쇄할 페이지 얻기
-	 * @method : getEndPage
-     * @author  : Seolhwa.Kim
-     * @create  : 2017. 05. 24
-	 * @param : map
-	 * @return
-	 */
-	public int getEndPage() {
-
-		endPage = perPageNum * getPage();
-		System.out.println(endPage);
-		return endPage;
-	}
-
-	/**
-	 * 끝에 인쇄할 페이지 정하기
-	 * @method : setEndPage
-     * @author  : Seolhwa.Kim
-     * @create  : 2017. 05. 24
-	 * @param : map
-	 * @return
-	 */
-	public void setEndPage(int endPage) {
-		
-		this.endPage = endPage;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + "]";
+		return "Criteria [page=" + page + ", perPageNum=" + perPageNum
+				+ "]";
 	}
+
+
+
+	
 }
 
 

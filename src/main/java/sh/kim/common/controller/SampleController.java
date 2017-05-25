@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import sh.kim.common.Criteria;
 import sh.kim.common.PageMaker;
@@ -20,6 +21,7 @@ public class SampleController {
 	@Autowired
 	private SampleBoard service;
 	
+	private int prevPage = 1;
 	
 	/**
 	 * 시작화면 겸 글 목록
@@ -46,14 +48,17 @@ public class SampleController {
 	 * @param : map
 	 * @return
 	 */
-	@RequestMapping("/read")
-	public String read(@RequestParam HashMap<String, Object> reqMap, Model model) throws Exception{
+	@RequestMapping("/readPage")
+	public String readList(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri) throws Exception{		
 		
 		HashMap<String, Object> list = service.view("sampleboard.read", reqMap);
 		service.countup("sampleboard.viewHit", reqMap);
 		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);	
+		model.addAttribute("prevPage", prevPage);
 		
-		return "/board/read";
+		
+		return "board/readCri";
 	}
 	
 	/**
@@ -65,9 +70,11 @@ public class SampleController {
 	 * @return
 	 */
 	@RequestMapping("/delete")
-	public String delete(@RequestParam HashMap<String, Object> reqMap, Model model) throws Exception{		
+	public String delete(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri, RedirectAttributes r) throws Exception{		
 		service.delete("sampleboard.delete", reqMap);
-		return "redirect:/index";
+
+		r.addAttribute("page", prevPage);
+		return "redirect:/listPage";
 	}
 	
 	/**
@@ -79,18 +86,24 @@ public class SampleController {
 	 * @return
 	 */
 	@RequestMapping("/updateView")
-	public String updateView(@RequestParam HashMap<String, Object> reqMap, Model model) throws Exception{	
+	public String updateView(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri) throws Exception{	
 		
 		HashMap<String, Object> list = service.view("sampleboard.read", reqMap);
 		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		model.addAttribute("prevPage", prevPage);
+		
 		return "board/update";
 	}
 	
 	
 	@RequestMapping("/update")
-	public String update(@RequestParam HashMap<String, Object> reqMap, Model model) throws Exception{		
+	public String update(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri, RedirectAttributes r) throws Exception{		
 		service.modify("sampleboard.update", reqMap);
-		return "redirect:/index";
+		
+		r.addAttribute("page", prevPage);
+		
+		return "redirect:/listPage";
 	}
 	
 	/**
@@ -108,13 +121,15 @@ public class SampleController {
 	
 	
 	@RequestMapping("/insert")
-	public String insert(@RequestParam HashMap<String, Object> reqMap, Model model) throws Exception{		
+	public String insert(@RequestParam HashMap<String, Object> reqMap, Model model, RedirectAttributes r) throws Exception{		
 		service.insert("sampleboard.save", reqMap);
-		return "redirect:/index";
+		r.addAttribute("page", prevPage);
+		
+		return "redirect:/listPage";
 	}
 	
 	/**
-	 * 페이징 테스트
+	 * 페이징
 	 * @method : listPage
      * @author  : Seolhwa.Kim
      * @create  : 2017. 05. 24
@@ -123,34 +138,28 @@ public class SampleController {
 	 */
 	@RequestMapping("/listPage")
 	public String listPage(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri) throws Exception{		
-	    model.addAttribute("list", service.listCriteria("sampleboard.listCri", reqMap, cri));
 	    
+	
+		if(reqMap.get("page").equals("1")){
+			model.addAttribute("list", service.listCriteria("sampleboard.listCri", reqMap, cri));
+		}else{
+			System.out.println(reqMap);
+			System.out.println(cri);
+			model.addAttribute("list", service.listCriteria("sampleboard.listPage", reqMap, cri));			
+		}
+		
 	    PageMaker pg = new PageMaker();
-	    pg.setCri(cri);
-	    pg.setTotalCount(50);
-	    
-	    System.out.println("cri : "+cri);
-	    model.addAttribute("pg", pg);	    
-	    System.out.println("getEndPage : "+pg.getEndPage());	    
-	    System.out.println("getDisplayPageNum : "+pg.getDisplayPageNum());	    
-	    System.out.println("getCri : "+pg.getCri());	    
+	    pg.setCri(cri);	    
+	    pg.setTotalCount(service.count("sampleboard.listCount", reqMap));
+	    model.addAttribute("pageMaker", pg);	     
+	    prevPage = cri.getPage();
 	    
 		return "board/listCri";
 	}
 	
 	
-	/**
-	 * 페이징 테스트
-	 * @method : listCri
-     * @author  : Seolhwa.Kim
-     * @create  : 2017. 05. 24
-	 * @param : map
-	 * @return
-	 *//*
-	@RequestMapping("/listCri")
-	public String listCri(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri) throws Exception{		
-	    model.addAttribute("list", service.listCriteria("sampleboard.listCri", reqMap, cri));
-		return "board/listCri";
-	}*/
+	
+	
+	
 	
 }

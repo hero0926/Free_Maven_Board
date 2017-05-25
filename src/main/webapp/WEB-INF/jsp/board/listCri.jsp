@@ -10,84 +10,85 @@
 <title>글읽기</title>
 </head>
 
+<style>
+.content{ 
+  text-align: center;
+  display: block;
+  margin: auto;
+}
+
+.row{
+  text-align: center;
+  display: block;
+  margin: auto;
+  border: 2px solid black;
+}
+
+
+table{
+  text-align: center;
+  margin-left : 430px;
+  padding : 20px;
+}
+
+</style>
+
 <body>
 
 
 <section class="content">
-	<div class="row">
-		<div class="col-md-12">
 
-			<div class="box">
-				<div class="col-md-8">
-					<h3 class="box-title">페이징전(고통) &nbsp;&nbsp;&nbsp; <a href="/insertView">글쓰기</a></h3>
-				</div></h3>
-				</div>
-								
-<div class="box-body">
+	<div class = "row">
+		<div class="col-md-8">
+			<h3 class="box-title">게시판 &nbsp;&nbsp;&nbsp; <a href="/insertView">글쓰기</a></h3>
+		</div>
 				
-<table style = "border: 2px solid black; text-align: center;">
-	<tr >
-		<th style="width: 60px">글번호</th>
-		<th>제목</th>
-		<th>글쓴이</th>
-		<th>등록일</th>
-		<th>수정일</th>
-		<th style="width: 60px">조회수</th>
-	</tr>
+		<table>
+			<tr >
+				<th style="width: 60px">글번호</th>
+				<th>제목</th>
+				<th>글쓴이</th>
+				<th>등록일</th>
+				<th>수정일</th>
+				<th style="width: 60px">조회수</th>
+			</tr>
+			
+			
+			<c:forEach items="${list}" var="list">
+				<tr>
+					<td>${list.b_idx}<c:out value="${list.bIdx}"/></td>
+					<td><a href='/readPage?b_idx=<c:out value="${list.bIdx}"/>'><c:out value="${list.bTitle}"/></a></td>
+					<td><c:out value="${list.bWriterName}"/></td>
+					<td><c:out value="${list.bWriteDate}"/></td>
+					<td><c:out value="${list.bModifyDate}"/></td>		
+					<td><span class="badge bg-red"><c:out value="${list.bViewHit}"/></span></td>
+				</tr>
 
+			</c:forEach>
 
-<c:forEach items="${list}" var="list">
-	<tr>
-		<td>${list.b_idx}<c:out value="${list.bIdx}"/></td>
-		<td><a href='/read?b_idx=<c:out value="${list.bIdx}"/>'><c:out value="${list.bTitle}"/></a></td>
-		<td><c:out value="${list.bWriterName}"/></td>
-		<td><c:out value="${list.bWriteDate}"/></td>
-		<td><c:out value="${list.bModifyDate}"/></td>		
-		<td><span class="badge bg-red"><c:out value="${list.bViewHit}"/></span></td>
-	</tr>
-
-</c:forEach>
-
-</table>
-
-		<div class="page">
-		<ul class="page">
+		</table>
 		
-		<script>
-			
-			console.log(<c:out value="${pg.startPage}"/>);
-			console.log(<c:out value="${pg.endPage}"/>);
-		</script>
-		
-		
-			<c:if test="${pg.prev }">
-				<li><a href="listPage?page=${pg.startPage -1 }">&laquo;</a></li>
-			</c:if>
-			
-			<%-- <c:forEach begin="${pg.cri.startPage }" end="${pg.endPage }" var="pg">
-				<li
-					<c:out value="${pg.page == b_idx?'class =active':''}"/>>
-					<a href="listPage?page=${b_idx}">${b_idx}</a>
-				</li>
-			
-			</c:forEach> --%>
-			
-			<c:if test="${pg.next && pg.endPage > 0}">
-				<li><a href="listPage?page=${pg.endPage +1}">&raquo;</a></li>
-			</c:if>
+	</div>
 
-				</ul>
-			</div>
-			
-		</ul>
-		
-		</div>
 
-				</div>
-			</div>
-		</div>
+	<div>
+		<c:if test="${pageMaker.prev}">
+				<a href=listPage?page=${pageMaker.startPage - 1}>&laquo;</a>
+		</c:if>
+
+		<c:forEach begin="${pageMaker.startPage }"	end="${pageMaker.endPage }" var="idx">					
+			<c:out value=" ${pageMaker.cri.page == idx?'(현)':''}" />						
+			<a href=listPage?page=${idx}>${idx}페이지</a>&nbsp;					
+		</c:forEach>
+
+		<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+			<a href=listPage?page=${pageMaker.endPage +1}>&raquo;</a>
+		</c:if>
 
 	</div>
+				
+	</div>
+	
 </section>
 
 </body>

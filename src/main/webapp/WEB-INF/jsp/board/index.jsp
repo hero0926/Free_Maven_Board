@@ -10,6 +10,10 @@
 <title>글읽기</title>
 </head>
 
+<script>
+
+</script>
+
 <body>
 
 
@@ -51,7 +55,7 @@
 </table>
 
 				</div>
-			</div>
+			</div>	
 		</div>
 
 	</div>

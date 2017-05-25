@@ -13,7 +13,8 @@
 <body>
 
 <form role="form" action="update" method="post">    
-    <input type='hidden' name='b_idx' value ="${list.b_idx}">    
+    <input type='hidden' name='b_idx' value ="${list.b_idx}"> 
+    <input type='hidden' name='page' value ="${prevPage}"> 
  </form>   
  		
  <h3>글 수정</h3>		
@@ -69,11 +70,13 @@
 							.on(
 									"click",
 									function() {
-										self.location = "/index";
+										self.location = "listPage?page=${cri.page}&perPageNum=${cri.perPageNum}";
 									});
 
 					$(".update").on("click",
 							function() {
+								formObj.attr("method", "get");
+								formObj.attr("action", "/update");
 								formObj.submit();
 							});
 
