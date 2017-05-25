@@ -43,17 +43,18 @@
 		<td><span class="badge bg-red"><c:out value="${list.b_view_hit}"/></span></td>
 	</tr>
 	<tr>
-		<th>내용</th>		
-		<td><textarea name="b_content" id="b_content"	
-         rows="20" cols="70">
+		<th colspan="6">내용</th>
+	</tr>
+	<tr>		
+		<td colspan="6"><textarea name="b_content" id="b_content"	
+         rows="20" cols="70" >
          ${list.b_content} 
          </textarea>
          <script>
 			CKEDITOR.replace( "b_content", {
 			});
-		</script></Td>
-         
-         <td/>
+		</script>
+		</td>
 	</tr>
 	
     </form>

@@ -84,4 +84,11 @@
 	]]>
 	</select>
 	
+	
+	<!-- 첨부파일 등록하기 -->
+	<insert id="addAttach">
+		INSERT into board_file (b_idx, f_board_name, f_ori_name, f_name, f_upload_date, f_size)
+		values (#{b_idx},#{f_board_name},#{f_ori_name},#{f_name}, CONVERT(CHAR(10), GETDATE(), 23), CONVERT(CHAR(10), GETDATE(), 23), #{f_size})
+	</insert>
+	
 </mapper>

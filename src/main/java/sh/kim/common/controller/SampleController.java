@@ -1,11 +1,14 @@
 package sh.kim.common.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +42,8 @@ public class SampleController {
 
 	@Autowired
 	private SampleBoard service;
+	
+	private String uploadPath = "D:\\test_file";
 	
 	private int prevPage = 1;
 	
@@ -140,8 +146,7 @@ public class SampleController {
 		return "board/insert";
 	}
 	
-	
-	@RequestMapping("/insert")
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(@RequestParam HashMap<String, Object> reqMap, Model model, RedirectAttributes r) throws Exception{
 		
 		/*String savePath = request.getSession().getServletContext().getRealPath("/");
@@ -159,7 +164,25 @@ public class SampleController {
 		
 	    System.out.println("fullPath : "+fullPath+rename)*/;
 	    
+	   /* System.out.println("insert");
+	    UUID uuid = UUID.randomUUID();
+	    
+	    String savedName = uuid.toString() + "_" + file.getOriginalFilename();
+	    
+	    System.out.println("savedName"+savedName);
+	    
+	    File target = new File(uploadPath, savedName);
+	    
+	    System.out.println("target"+target);
+	    
+	    FileCopyUtils.copy(file.getBytes(), target);
+	    
+	    System.out.println("FileCopyUtils.copy");
+	    */
 		service.insert("sampleboard.save", reqMap);
+		
+		System.out.println("service.insert");
+		
 		r.addAttribute("page", prevPage);
 		
 		return "redirect:/listPage";

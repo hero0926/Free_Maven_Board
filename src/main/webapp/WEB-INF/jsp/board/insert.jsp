@@ -25,20 +25,24 @@
 		<th>비밀번호</th>
 	</tr>
 	<tr>	
-		<td><input type="text" name="b_title" size="50"/></td>
-		<td><input type="text" name="b_writer_name"/></td>
-		<td><input type="text" name="b_password"/></td>
+		<td><input type="text" name="b_title" id="b_title" size="50"/></td>
+		<td><input type="text" name="b_writer_name" id="b_writer_name"/></td>
+		<td><input type="password" name="b_password" id="b_password"/></td>
 	</tr>
 	<tr>
-		<th>내용</th>
+		<th >내용</th>
 	</tr>
-	<tr style="float : center;">		
-		<Td><textarea name="b_content" id="b_content" rows="50" cols="10">              
+	<tr>	
+		<Td colspan="3"><textarea name="b_content" id="b_content" rows="50" cols="10">              
 		</textarea>
 		<script>
 			CKEDITOR.replace( "b_content", {
 			});
 		</script></Td>
+	</tr>
+	<tr>
+		<Td>첨부파일</Td>
+		<td><input type="file" name="file" /></td>
 	</tr>
 </table>
 </form>

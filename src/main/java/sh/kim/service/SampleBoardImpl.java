@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import sh.kim.common.CommonDAO;
 import sh.kim.common.Criteria;
+import sh.kim.common.Excel;
 
 
 @Service
@@ -34,13 +35,14 @@ public class SampleBoardImpl implements SampleBoard{
 			HashMap<String, Object> map) throws Exception {
 		return dao.read(nameSpace, map);
 	}
-
+	
 	@Override
 	public int insert(String nameSpace, HashMap<String, Object> map)
 			throws Exception {
-		return dao.create(nameSpace, map);
 		
+		return dao.create(nameSpace, map);		
 	}
+	
 
 	@Override
 	public int delete(String nameSpace, HashMap<String, Object> map)

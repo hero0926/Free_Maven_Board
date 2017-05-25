@@ -29,4 +29,6 @@ public interface CommonDAO {
 	
 	List<?> listPage(String nameSpace, HashMap<String, Object> map, Criteria cri) throws Exception;
 	
+	void addAttach(String nameSpace, String fullName) throws Exception;
+	
 }

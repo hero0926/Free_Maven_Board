@@ -1,6 +1,7 @@
 package sh.kim.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,21 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 public class Excel extends AbstractExcelView{
 	
+	/*private String[] Files;
+	
+	public String[] getFiles() {
+		return Files;
+	}
+	
+	public void setFiles(String[] files) {
+		Files = files;
+	}
+	
+	@Override
+	public String toString() {
+		return "Excel [Files=" + Arrays.toString(Files) + "]";
+	}*/
+
 	/**
 	 * 엑셀 다운로드 받기
 	 * @method : exel

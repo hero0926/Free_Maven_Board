@@ -148,6 +148,21 @@ public class CommonDAOImpl implements CommonDAO{
 		// TODO Auto-generated method stub		
 			return session.selectList(nameSpace, cri);		
 	}
+	
+	
+	/**
+	 * 첨부파일 등록
+	 * @method : addAttach
+     * @author  : Seolhwa.Kim
+     * @create  : 2017. 05. 24
+	 * @param : map
+	 * @return
+	 */
+	@Override
+	public void addAttach(String nameSpace, String fullName) throws Exception {
+		// TODO Auto-generated method stub
+		session.insert(nameSpace, fullName);
+	}
 
 
 	

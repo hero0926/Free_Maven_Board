@@ -33,7 +33,7 @@
 		<th style="width: 60px">조회수</th>
 	</tr>
 
-		<tr>
+	<tr>
 		<td><c:out value="${list.b_idx}"/></td>
 		<td><c:out value="${list.title}"/></td>
 		<td><c:out value="${list.b_writer_name}"/></td>
@@ -42,8 +42,11 @@
 		<td><span class="badge bg-red"><c:out value="${list.b_view_hit}"/></span></td>
 	</tr>
 	<tr>
-		<th>내용</th>		
-		<td><textarea name='b_content' id='b_content'		
+		<th colspan="6">내용</th>
+	</tr>
+	<tr>	
+		<td colspan="6">
+		<textarea name='b_content' id='b_content'		
          readonly="readonly" rows="20" cols="100">
          ${list.b_content} 
          </textarea>   
@@ -51,8 +54,7 @@
 		<script>
 			CKEDITOR.replace( "b_content", {
 			});
-		</script></Td>
-         <td/>
+		</script></td>
 	</tr>
 </table>
     
