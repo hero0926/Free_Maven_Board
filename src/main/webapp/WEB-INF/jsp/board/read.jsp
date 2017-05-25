@@ -13,7 +13,7 @@
 <body>
 
 <form role="form" action="update" method="post">    
-    <input type='hidden' name='b_idx' value ="${list.b_idx}">    
+    <input type='hidden' name='page' value ="${prevPage}">    
  </form>   
  		
  <h3>글 읽기</h3>		

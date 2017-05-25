@@ -63,7 +63,7 @@ public class PageMaker {
 			endPage = tempEndPage;
 		}
 		
-		prev = cri.getPage() ==1 ? false : true;
+		prev = cri.getPage() == 1 ? false : true;
 		
 		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
 		

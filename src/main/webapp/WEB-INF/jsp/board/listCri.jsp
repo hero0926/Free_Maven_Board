@@ -8,7 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>글읽기</title>
-</head>
+
+<script src="../../common/js/jquery-3.2.1.min.js"></script>
+
 
 <style>
 .content{ 
@@ -33,16 +35,47 @@ table{
 
 </style>
 
+<script>
+$(document).ready(function(){
+	
+	var formObj = $("form[role='form']");
+	
+	$(".excel").on("click", function(){
+		formObj.attr("method", "get");
+		formObj.attr("action", "/excel");
+		formObj.submit();
+	});
+	
+	$(".insert").on("click", function(){
+		formObj.attr("action", "/insertView");
+		formObj.submit();
+	});
+	
+});
+</script>
+				
+
+</head>
+
 <body>
 
+<form role="form" action="update" method="post">
+    <input type='hidden' name='page' value ="${prevPage}">  
+</form>   
 
 <section class="content">
 
 	<div class = "row">
 		<div class="col-md-8">
-			<h3 class="box-title">게시판 &nbsp;&nbsp;&nbsp; <a href="/insertView">글쓰기</a></h3>
+			<h3 class="box-title">게시판</h3>
 		</div>
-				
+		
+		 <div class="box-footer" style="padding-left : 250px;">
+    	<button type="submit" class="btn excel">excel 다운</button>
+    	<button type="submit" class="btn insert">글쓰기</button>
+  		</div>
+
+
 		<table>
 			<tr >
 				<th style="width: 60px">글번호</th>
@@ -65,6 +98,7 @@ table{
 				</tr>
 
 			</c:forEach>
+			
 
 		</table>
 		
