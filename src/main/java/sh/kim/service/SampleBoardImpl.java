@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import sh.kim.common.CommonDAO;
@@ -38,6 +39,7 @@ public class SampleBoardImpl implements SampleBoard{
 	public int insert(String nameSpace, HashMap<String, Object> map)
 			throws Exception {
 		return dao.create(nameSpace, map);
+		
 	}
 
 	@Override
@@ -89,6 +91,7 @@ public class SampleBoardImpl implements SampleBoard{
 		// TODO Auto-generated method stub
 		return dao.listPage(nameSpace, map, cri);
 	}
+	
 
 
 

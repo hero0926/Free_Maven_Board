@@ -14,18 +14,9 @@
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-    
-	<!--<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
-		<property name="jndiName" value="java:comp/env/jdbc/zois" /> </bean>
- 	-->
-<!-- 	 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> 
-		<property name="url" value ="jdbc:log4jdbc:oracle:thin:@hero.cjn5new4lwpd.ap-northeast-2.rds.amazonaws.com:1521:ORCL" /> 
-		<property name="username" value="hero" /> 
-		<property name="password" value="rnfnal12" /> 
-	</bean> -->
-	
+    	
 	<context:property-placeholder location="classpath:/properties/db.properties" />
+	
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
@@ -46,12 +37,7 @@
 	</bean>
 	
 	<tx:annotation-driven />
-	
-	<!-- <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
-		destroy-method="clearCache">
-		<constructor-arg name="sqlSessionFactory" ref="sqlSessionTemplate"></constructor-arg>
-	</bean> -->
-	
+		
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -60,9 +46,15 @@
 	<context:component-scan base-package="sh.kim.common" />
 	<context:component-scan base-package="sh.kim.service" />
 	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+	<!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
 		<property name="maxUploadSize" value="100000000" />
         <property name="maxInMemorySize" value="100000000" />
+	</bean> -->
+	
+	<bean id="spring.RegularCommonsMultipartResolver"
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<property name="maxUploadSize" value="100000000" />
+	<property name="maxInMemorySize" value="100000000" />
 	</bean>
 	
 	<mvc:view-controller path="/" view-name="index" />

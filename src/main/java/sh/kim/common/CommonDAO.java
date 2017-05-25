@@ -28,4 +28,5 @@ public interface CommonDAO {
 	void countup(String nameSpace, HashMap<String, Object> map) throws Exception;
 	
 	List<?> listPage(String nameSpace, HashMap<String, Object> map, Criteria cri) throws Exception;
+	
 }

@@ -29,5 +29,6 @@ public interface SampleBoard {
 	
 	JSONArray jsonListAll(String nameSpace, HashMap<String, Object> map) throws Exception;
 	
-	void countup(String nameSpace, HashMap<String, Object> map) throws Exception;
+	void countup(String nameSpace, HashMap<String, Object> map) throws Exception;	
+
 }

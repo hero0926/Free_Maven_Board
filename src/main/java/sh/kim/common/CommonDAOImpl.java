@@ -22,8 +22,6 @@ public class CommonDAOImpl implements CommonDAO{
 	private SqlSessionTemplate session;
 
 	
-	
-	
 	/**
 	 * 글 개수
 	 * @method : count
@@ -71,8 +69,7 @@ public class CommonDAOImpl implements CommonDAO{
 		// TODO Auto-generated method stub
 		return session.selectOne(nameSpace, map);
 	}
-	
-	
+		
 	
 	/**
 	 * 글 쓰기
@@ -134,7 +131,6 @@ public class CommonDAOImpl implements CommonDAO{
 		// TODO Auto-generated method stub
 		session.update(nameSpace, map);
 	}
-
 	
 	
 	/**
@@ -154,6 +150,5 @@ public class CommonDAOImpl implements CommonDAO{
 	}
 
 
-	
 	
 }

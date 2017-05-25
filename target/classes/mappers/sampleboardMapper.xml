@@ -43,6 +43,12 @@
 		values (#{b_title},#{b_content},#{b_writer_name},#{b_password}, CONVERT(CHAR(10), GETDATE(), 23), CONVERT(CHAR(10), GETDATE(), 23), 0)
 	</insert>
 	
+	<!-- 파일넣기 -->
+	<insert id="addattach" parameterType="java.util.HashMap" >
+		insert into board_file (f_idx, b_idx, f_board_name, f_ori_name, f_name, f_upload_date, f_size)
+		values (#{f_idx},#{b_idx},#{f_board_name},#{f_ori_name}, #{f_name}, #{f_upload_date}, #{f_size})
+	</insert>
+	
 	<!-- 글 수정하기 -->
 	<update id="update" parameterType="java.util.HashMap" >
 		update board_sample set

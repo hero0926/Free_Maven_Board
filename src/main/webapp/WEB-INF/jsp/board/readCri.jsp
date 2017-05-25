@@ -11,6 +11,7 @@
 </head>
 
 <script src="../../common/js/jquery-3.2.1.min.js"></script>
+<script src="../../common/ckeditor/ckeditor.js"></script>
 
 <body>
 
@@ -42,10 +43,15 @@
 	</tr>
 	<tr>
 		<th>내용</th>		
-		<td><textarea name='content'		
+		<td><textarea name='b_content' id='b_content'		
          readonly="readonly" rows="20" cols="100">
          ${list.b_content} 
-         </textarea>
+         </textarea>   
+         
+		<script>
+			CKEDITOR.replace( "b_content", {
+			});
+		</script></Td>
          <td/>
 	</tr>
 </table>

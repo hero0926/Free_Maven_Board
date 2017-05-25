@@ -2,13 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script src="//code.jquery.com/jquery.min.js"></script>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>글 수정하기</title>
+
+
+<script src="../../common/js/jquery-3.2.1.min.js"></script>
+<script src="../../common/ckeditor/ckeditor.js"></script>
+
 </head>
 <body>
 
@@ -40,10 +44,15 @@
 	</tr>
 	<tr>
 		<th>내용</th>		
-		<td><textarea name="b_content" 		
+		<td><textarea name="b_content" id="b_content"	
          rows="20" cols="70">
          ${list.b_content} 
          </textarea>
+         <script>
+			CKEDITOR.replace( "b_content", {
+			});
+		</script></Td>
+         
          <td/>
 	</tr>
 	
