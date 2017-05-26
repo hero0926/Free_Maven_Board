@@ -9,7 +9,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>글 쓰기</title>
 <script src="../../common/js/jquery-3.2.1.min.js"></script>
-<script src="../../common/js/*"></script>
 <script src="../../common/ckeditor/ckeditor.js"></script>
 
 <style>
@@ -55,7 +54,7 @@
 	</tr>
 	<tr>	
 		<Td colspan="3"><textarea name="b_content" id="b_content" rows="50" cols="10">              
-		</textarea>
+		</textarea>ㅇ
 		<script>
 			CKEDITOR.replace( "b_content", {
 			});
@@ -80,7 +79,7 @@
 				var formObj = $("form[role='form']");
 				var file = $('input[type="file"]').val().trim();
 				
-				console.log(file);
+				console.log($('input[type="file"]').val());
 				
 				$(".no_write")
 					.on(
@@ -88,11 +87,12 @@
 							function() {
 								self.location = "/listPage?page=1";
 							});
-				$(".write").on("click",
+				$(".write").
+					on(
+						"click",
 						function() {
 					
-					
-							if(file!=null){
+							if(!document.getElementById("file").files.length == 0){
 							console.log("file upload");
 								
 							formObj.attr("enctype", "multipart/form-data");
@@ -101,9 +101,14 @@
 							formObj.submit();
 							
 							}else{
+								
+								console.log(file);
+								console.log("file upload 안함");
+								
 								formObj.attr("method", "post");
 								formObj.attr("action", "/insert");
-								formObj.submit();								
+								formObj.submit();
+								
 							}
 							
 						});

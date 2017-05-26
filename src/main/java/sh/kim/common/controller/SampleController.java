@@ -66,22 +66,6 @@ public class SampleController{
 	
 	private ModelAndView modelAndView;
 	
-	/**
-	 * 시작화면 겸 글 목록
-	 * @method : index
-     * @author  : Seolhwa.Kim
-     * @create  : 2017. 05. 24
-	 * @param : map
-	 * @return
-	 */
-	@RequestMapping("/index")
-	public String index(@RequestParam HashMap<String, Object> reqMap, Model model) throws Exception{
-		
-		List<?> list = service.listAll("sampleboard.listAll", reqMap);	
-		model.addAttribute("list", list);
-		
-		return "/board/index";
-	}
 	
 	/**
 	 * 글 읽기
@@ -119,7 +103,30 @@ public class SampleController{
 	@Transactional
 	@RequestMapping("/delete")
 	public String delete(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri, RedirectAttributes r) throws Exception{		
-				
+		
+		//진짜파일부터 지우기
+		String fullpath = "D:\\test_file\\";
+		
+		String filename = (String) reqMap.get("f_name");
+		fullpath += filename;
+		
+		System.out.println(fullpath);
+		
+		try {
+			
+			File downloadFile = new File(fullpath);
+			
+			if(downloadFile.delete()){
+				System.out.println("성공");
+			}		
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		//테이블도 지움
 		service.delete("sampleboard.deleteFile", reqMap);
 		service.delete("sampleboard.delete", reqMap);
 		r.addAttribute("page", prevPage);
@@ -413,13 +420,8 @@ public class SampleController{
 	@RequestMapping("/listPage")
 	public String listPage(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri) throws Exception{		
 	    
-	
-		if(reqMap.get("page").equals("1")){
-			model.addAttribute("list", service.listCriteria("sampleboard.listCri", reqMap, cri));
-		}else{
-			model.addAttribute("list", service.listCriteria("sampleboard.listPage", reqMap, cri));			
-		}
-		
+	    model.addAttribute("list", service.listCriteria("sampleboard.listPage", reqMap, cri));			
+				
 	    PageMaker pg = new PageMaker();
 	    pg.setCri(cri);	    
 	    pg.setTotalCount(service.count("sampleboard.listCount", reqMap));
@@ -456,13 +458,8 @@ public class SampleController{
 	public ModelAndView report(@RequestParam HashMap<String, Object> reqMap, Model model, Criteria cri) throws Exception{
 		
 		List<?> excellist;
-		
-		if(reqMap.get("page").equals("1")){
-			excellist = service.listCriteria("sampleboard.listCri", reqMap, cri);			
-		}else{
-			excellist = service.listCriteria("sampleboard.listPage", reqMap, cri);
-		}
-			    
+		excellist = service.listCriteria("sampleboard.listPage", reqMap, cri);
+		    
 		return new ModelAndView(new Excel(), "list", excellist);
 	}
 	

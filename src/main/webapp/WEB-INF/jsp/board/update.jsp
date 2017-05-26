@@ -90,7 +90,7 @@
 						function() {
 					
 					
-					if(file!=null){
+					if(!document.getElementById("file").files.length == 0){
 					console.log("file upload");
 						
 					f.attr("enctype", "multipart/form-data");
@@ -99,9 +99,9 @@
 					f.submit();
 					
 					}else{
-						formObj.attr("method", "post");
-						formObj.attr("action", "/update");
-						formObj.submit();								
+						f.attr("method", "post");
+						f.attr("action", "/update");
+						f.submit();								
 					}
 			});		
 	});		

@@ -70,11 +70,11 @@
 	<select id="listPage" parameterType="java.util.HashMap" resultType="egovMap">
 	<![CDATA[
 		SELECT * FROM (
-               SELECT ROW_NUMBER() OVER(ORDER BY b_idx) AS NUMBER,
+               SELECT ROW_NUMBER() OVER(ORDER BY b_idx desc) AS NUMBER,
                     b_idx, b_title, b_content, b_writer_name, b_write_date, b_modify_date, b_view_hit FROM board_sample
                ) AS TBL
 			WHERE NUMBER BETWEEN ((#{page} - 1) * #{perPageNum} + 1) AND (#{page} * #{perPageNum})
-			ORDER BY b_idx
+			ORDER BY b_idx desc 
 	]]>
 	</select>
 	
