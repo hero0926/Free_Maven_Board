@@ -99,7 +99,6 @@ $(document).ready(function(){
 
 			</c:forEach>
 			
-
 		</table>
 		
 	</div>

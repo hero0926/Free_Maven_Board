@@ -15,9 +15,15 @@
 
 <body>
 
-<form role="form" action="update" method="post">    
+<form role="form1" action="delete" method="post">    
     <input type='hidden' name='b_idx' value ="${list.b_idx}">
     <input type='hidden' name='page' value ="${prevPage}">  
+    <input type='hidden' name='f_name' value ="${f_list.f_name}">  
+ </form>
+ 
+ <form role="form2" action="update" method="post">    
+    <input type='hidden' name='b_idx' value ="${list.b_idx}">
+    <input type='hidden' name='page' value ="${prevPage}">
  </form>
 
  		
@@ -55,12 +61,33 @@
 			CKEDITOR.replace( "b_content", {
 			});
 		</script></td>
-	</tr>
+	</tr>	
 </table>
+
+
+	
+    
+    <c:if test="${!empty f_list }">
+    	<table style = "border: 2px solid black; border : 5px; text-align: center;">
+    	<tr>
+    		<td>첨부파일 :</td>
+    		<td>${f_list.f_ori_name}</td>
+    		<td>
+    		
+    		<form role="form" action="downloadFile" method="post">
+    		<input type='hidden' name='f_name' value ="${f_list.f_name}">  
+			</form> 
+    		<button type="submit" class="btn downloadFile">다운로드</button>
+    		</td>
+    		
+    	</tr>
+    	</table>
+    	
+	</c:if>
     
 
   <div class="box-footer" style="padding-left : 250px;">
-    <button type="submit" class="btn update">수정하기</button>
+    <button type="submit" class="btn update">수정하기</button>    
     <button type="submit" class="btn delete">글 지우기</button>
     <button type="submit" class="btn list">목록 보기 </button>
   </div>
@@ -70,28 +97,41 @@
 <script>
 $(document).ready(function(){
 	
-	var formObj = $("form[role='form']");
+	var del = $("form[role='form1']");
 	
-	console.log(formObj);
+	var file = $("form[role='form']");
 	
-	$(".update").on("click", function(){
-		formObj.attr("action", "/updateView");
-		formObj.attr("method", "get");		
-		formObj.submit();
-	});
+	var uf = $("form[role='form2']");
+	
+	console.log(del);
+	console.log(file);
+	
 	
 	$(".delete").on("click", function(){
-		formObj.attr("action", "/delete");
-		formObj.attr("method", "get");		
-		formObj.submit();
+		del.attr("action", "/delete");
+		del.attr("method", "get");		
+		del.submit();
 	});
 	
 	$(".list").on("click", function(){
-		formObj.attr("method", "get");
-		formObj.attr("action", "/listPage");
-		formObj.submit();
+		uf.attr("method", "get");
+		uf.attr("action", "/listPage");
+		uf.submit();
 	});
 	
+	$(".update").on("click", function(){
+		uf.attr("method", "get");
+		uf.attr("action", "/updateView");
+		uf.submit();
+	});
+	
+	$(".downloadFile").on("click", function(){
+		file.attr("method", "get");
+		file.attr("action", "/downloadFile");
+		file.submit();
+	});
+		
 });
+
 </script>
 </html>

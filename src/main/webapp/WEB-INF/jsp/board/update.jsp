@@ -16,13 +16,15 @@
 </head>
 <body>
 
-<form role="form" action="update" method="post">    
+<form role="form" action="list" method="post">    
     <input type='hidden' name='b_idx' value ="${list.b_idx}"> 
     <input type='hidden' name='page' value ="${prevPage}"> 
- </form>   
+</form>   
  		
- <h3>글 수정</h3>		
- 		
+ <h3>글 수정</h3> 		
+	
+<form role="form2" action="update" method="post">
+
 <table style = "border: 2px solid black; text-align: center;">
 	<tr >
 		<th style="width: 60px">글번호</th>
@@ -33,8 +35,6 @@
 		<th style="width: 60px">조회수</th>
 	</tr>
 	<tr>
-	
-	<form role="form" action="update" method="post">	
 		<td><input type="text" name="b_idx" value="${list.b_idx}" readonly="readonly"/></td>
 		<td><input type="text" name="b_title" value="${list.b_title}" size="50"/></td>
 		<td><c:out value="${list.b_writer_name}"/></td>
@@ -43,7 +43,10 @@
 		<td><span class="badge bg-red"><c:out value="${list.b_view_hit}"/></span></td>
 	</tr>
 	<tr>
-		<th colspan="6">내용</th>
+		<th colspan="3">내용</th>
+		<td>
+		첨부파일 <input type="file" name="file" id="file">
+		</td>
 	</tr>
 	<tr>		
 		<td colspan="6"><textarea name="b_content" id="b_content"	
@@ -56,10 +59,10 @@
 		</script>
 		</td>
 	</tr>
-	
-    </form>
     
 </table>
+	
+</form>
 
   <div class="box-footer">
 	<button type="submit" class="btn update">수정하기</button>
@@ -68,35 +71,39 @@
 
 </body>
 	<script>
-		$(document)
-		.ready(
-				function() {
+		$(document).ready(
+			function() {
 
-					var formObj = $("form[role='form']");
+				var formObj = $("form[role='form']");
+				var f = $("form[role='form2']");
 
+				var file = $('input[type="file"]').val().trim();
 
-					$(".no_update")
-							.on(
-									"click",
-									function() {
-										self.location = "listPage?page=${cri.page}&perPageNum=${cri.perPageNum}";
-									});
+				$(".no_update")
+						.on(
+								"click",
+								function() {
+									self.location = "listPage?page=${cri.page}";
+								});
 
-					$(".update").on("click",
-							function() {
+				$(".update").on("click",
+						function() {
+					
+					
+					if(file!=null){
+					console.log("file upload");
 						
-								
-								formObj.attr("method", "get");
-								formObj.attr("action", "/update");
-								formObj.submit();
-							});
-
-				});
-		
-		
-		$}
-		
+					f.attr("enctype", "multipart/form-data");
+					f.attr("method", "post");
+					f.attr("action", "/fileUpdate");
+					f.submit();
+					
+					}else{
+						formObj.attr("method", "post");
+						formObj.attr("action", "/update");
+						formObj.submit();								
+					}
+			});		
+	});		
 	</script>
-
-
 </html>

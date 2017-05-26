@@ -99,8 +99,21 @@
 	</select>
 	
 	<!-- 첨부파일 다운로드 받기 -->
-	<select id="isFile" resultType="int" parameterType="java.util.HashMap">
-	
+	<select id="isFile" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	  select f_idx, b_idx, f_board_name, f_ori_name, f_name, f_upload_date, f_size from board_file
+	  where b_idx = #{b_idx}
 	</select>
+	
+	<select id="getFileName" resultType="java.lang.String" parameterType="java.util.HashMap">
+	  select f_name from board_file where f_idx = #{f_idx}
+	</select>
+	
+	<!-- 첨부파일 삭제 -->
+	<delete id="deleteFile" parameterType="java.util.HashMap">
+		DELETE FROM board_file
+		WHERE 
+		b_idx = #{b_idx}
+	</delete>
+	
 	
 </mapper>

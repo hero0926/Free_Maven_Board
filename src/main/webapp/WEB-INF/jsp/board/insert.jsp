@@ -49,8 +49,6 @@
 	<tr>
 		<th >내용</th>
 		
-			
-		
 		<td>
 		첨부파일 <input type="file" name="file" id="file">
 		</td>
@@ -82,6 +80,8 @@
 				var formObj = $("form[role='form']");
 				var file = $('input[type="file"]').val().trim();
 				
+				console.log(file);
+				
 				$(".no_write")
 					.on(
 							"click",
@@ -92,11 +92,14 @@
 						function() {
 					
 					
-							if(file){
+							if(file!=null){
+							console.log("file upload");
+								
 							formObj.attr("enctype", "multipart/form-data");
 							formObj.attr("method", "post");
 							formObj.attr("action", "/fileUpload");
 							formObj.submit();
+							
 							}else{
 								formObj.attr("method", "post");
 								formObj.attr("action", "/insert");
