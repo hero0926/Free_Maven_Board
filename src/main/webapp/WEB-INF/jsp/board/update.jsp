@@ -74,7 +74,6 @@
 
 					var formObj = $("form[role='form']");
 
-					console.log(formObj);
 
 					$(".no_update")
 							.on(
@@ -85,12 +84,18 @@
 
 					$(".update").on("click",
 							function() {
+						
+								
 								formObj.attr("method", "get");
 								formObj.attr("action", "/update");
 								formObj.submit();
 							});
 
 				});
+		
+		
+		$}
+		
 	</script>
 
 

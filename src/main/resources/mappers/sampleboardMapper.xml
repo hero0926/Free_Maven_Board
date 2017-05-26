@@ -45,9 +45,12 @@
 	
 	<!-- 파일넣기 -->
 	<insert id="addattach" parameterType="java.util.HashMap" >
-		insert into board_file (f_idx, b_idx, f_board_name, f_ori_name, f_name, f_upload_date, f_size)
-		values (#{f_idx},#{b_idx},#{f_board_name},#{f_ori_name}, #{f_name}, #{f_upload_date}, #{f_size})
+		insert into board_file (b_idx, f_board_name, f_ori_name, f_name, f_upload_date, f_size)
+		values (#{b_idx},#{f_board_name},#{f_ori_name}, #{f_name}, #{f_upload_date}, #{f_size})
 	</insert>
+	<select id="fileidx" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select b_idx from board_sample where b_idx = #{b_idx}	
+	</select>
 	
 	<!-- 글 수정하기 -->
 	<update id="update" parameterType="java.util.HashMap" >
@@ -88,7 +91,16 @@
 	<!-- 첨부파일 등록하기 -->
 	<insert id="addAttach">
 		INSERT into board_file (b_idx, f_board_name, f_ori_name, f_name, f_upload_date, f_size)
-		values (#{b_idx},#{f_board_name},#{f_ori_name},#{f_name}, CONVERT(CHAR(10), GETDATE(), 23), CONVERT(CHAR(10), GETDATE(), 23), #{f_size})
+		values (#{b_idx},#{f_board_name},#{f_ori_name},#{f_name}, CONVERT(CHAR(10), GETDATE(), 23), #{f_size})
 	</insert>
+	
+	<select id="file_idx" resultType="int" parameterType="java.util.HashMap">
+	  select top 1 * from board_sample where b_writer_name=#{b_writer_name} and b_title = #{b_title}
+	</select>
+	
+	<!-- 첨부파일 다운로드 받기 -->
+	<select id="isFile" resultType="int" parameterType="java.util.HashMap">
+	
+	</select>
 	
 </mapper>
